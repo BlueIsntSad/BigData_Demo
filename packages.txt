@@ -1,0 +1,3 @@
+openjdk-8-jre-headless
+#ENV JAVA_HOME /usr/lib/jvm/openjdk-8-jre-headless/ 
+apt-get install openjdk-8-jdk-headless -qq
