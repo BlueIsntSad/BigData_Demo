@@ -1,3 +1,1 @@
 default-jre
-#ENV JAVA_HOME /usr/lib/jvm/default-jre/ 
-apt-get install default-jre -qq
