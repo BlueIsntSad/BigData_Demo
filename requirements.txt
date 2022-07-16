@@ -2,3 +2,10 @@ streamlit
 numpy
 pandas
 pyspark
+tqdm
+requests_html
+bs4
+unidecode
+pytz
+emoji
+plotly
