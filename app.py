@@ -109,16 +109,22 @@ def inser_data():
 def get_data_from_URL():
     st.write('#### Crawl dữ liệu từ URL')
 
-    URL = st.text_input('Điền URL đến bài đăng bán BDS lấy từ https://nhadatvui.vn/ cần dự đoán.', placeholder='https://nhadatvui.vn/bat-dong-san-ABC')
-    st.write('URL get', URL)
+    with st.form(key='URL_form'):
+        URL = st.text_input(
+            label='Điền URL đến bài đăng bán BDS lấy từ https://nhadatvui.vn/ cần dự đoán.',
+            placeholder='https://nhadatvui.vn/bat-dong-san-ABC')
+        submit_button = st.form_submit_button(label='Submit')
 
-    output = st.empty()
-    with st_capture(output.code):
-        status, postInfo = getdata(URL)
-        if status == 200:
-            print(postInfo)
-        else:
-            print('Cant request url')
+    if getURLbt:
+        st.write('push')
+    
+    #output = st.empty()
+    #with st_capture(output.code):
+    #    status, postInfo = getdata(URL)
+    #    if status == 200:
+    #        print(postInfo)
+    #    else:
+    #        print('Cant request url')
 
 def model_page(model_name, model):
     option_list = ['Dữ liệu mẫu', 'Nhập dữ liệu', 'Crawl dữ liệu từ URL']
