@@ -1,6 +1,7 @@
 streamlit
 numpy
 pandas
+sklearn
 pyspark
 tqdm
 requests_html
