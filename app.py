@@ -117,7 +117,7 @@ def get_data_from_URL():
 
     if submit_button:
         if not validateURL(URL):
-            st.warning('URL không hợp lệ')
+            noti = st.warning('URL không hợp lệ')
         else:
             output = st.empty()
             with st_capture(output.code):
