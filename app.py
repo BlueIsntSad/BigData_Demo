@@ -230,54 +230,7 @@ if __name__ == '__main__':
             </div>
         </div>
     </div>
-    <div class="mt-3">
-        <div class="bg-property rounded p-3">
-            <ul class="product-infomation text-300">
-                <li>
-                    <span class="i-f1">
-                        <i class="fa fa-icon-me fa-custom-square"></i>
-                        49 m² 
-                    </span>
-                    <span>Diện tích</span>
-                </li>
-                <li>
-                    <span class="i-f1">
-                        <i class="fa fa-icon-me fa-custom-height"></i>
-                        --
-                    </span>
-                    <span>Chiều dài</span>
-                </li>
-                <li>
-                    <span class="i-f1">
-                        <i class="fa fa-icon-me fa-custom-width"></i>
-                        --
-                    </span>
-                    <span>Chiều rộng</span>
-                </li>
-                <li>
-                    <span class="i-f1">
-                        <i class="fa fa-icon-me fa-custom-direction"></i>
-                        --
-                    </span>
-                    <span>Hướng</span>
-                </li>
-                <li>
-                    <span class="i-f1">
-                        <i class="fa fa-icon-me fa-custom-bedroom"></i>
-                        --
-                    </span>
-                    <span>Phòng ngủ</span>
-                </li>
-                <li>
-                    <span class="i-f1">
-                        <i class="fa fa-icon-me fa-custom-bathroom"></i>
-                        --
-                    </span>
-                    <span>Phòng tắm</span>
-                </li>
-            </ul>
-        </div>
-    </div>
+    
     '''
     st.markdown(html_string, unsafe_allow_html=True)
 
