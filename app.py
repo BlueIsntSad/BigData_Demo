@@ -137,20 +137,22 @@ def get_data_from_URL():
             noti = st.warning('URL không hợp lệ')
         else:
             try:
-                status, postInfo = getdata(URL)
+                with st.spinner('Crawling ...'):
+                    status, postInfo = getdata(URL)
             except:
                 noti = st.warning("Can't get URL")
             else:
                 if status == 200:
-                    post_pandasDF = pd.DataFrame.from_dict([postInfo])
-                    post_JSON = json.loads(json.dumps(list(post_pandasDF.T.to_dict().values())))
-                    post_pDF = spark.read.json(sc.parallelize([post_JSON]))
-                    post_clean = cleanData(post_pDF)
-                    #st.table(post_pandasDF)
+                    with st.spinner('Data processing ...'):
+                        post_pandasDF = pd.DataFrame.from_dict([postInfo])
+                        post_JSON = json.loads(json.dumps(list(post_pandasDF.T.to_dict().values())))
+                        post_pDF = spark.read.json(sc.parallelize([post_JSON]))
+                        post_clean = cleanData(post_pDF)
+                        #st.table(post_pandasDF)
 
-                    output = st.empty()
-                    with st_capture(output.code):
-                        print(post_clean.show())
+                        output = st.empty()
+                        with st_capture(output.code):
+                            print(post_clean.show())
                 else:
                     print('Cant request url', status)
 
