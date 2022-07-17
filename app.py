@@ -63,21 +63,29 @@ def cleanData(df):
             df = df.fillna(value=2021, subset=[col])
     return df
 
-def tranformFetures(X, assembler):
+def tranformFetures(df):
     # Tạo bản sao để tránh ảnh hưởng dữ liệu gốc
     X_ = X.copy()
     ###########################
+    dt1 = binningDistribute(df) #
+    dt2 = getAdministrative(dt1, keepOutput=True, vectorize=False)                                          #
+    dt3, stringIndexs = getDummy(dt2, keepOutput=True, vectorize=False)                                     #####
+    dt4, encodes_idx = getEncodedDummy(dt3)                                                                 ##
+    data_f, encodes_ohe = OHEtransform(dt4, vectorize=False)                                                ###########
 
+    output = st.empty()
+    with st_capture(output.code):
+        print(data_f.show(5))
 
 
     ###########################
-    st.write("tranform")
-    return X_tranform
+    #st.write("tranform")
+    return data_f
 
 def prediction(samples, model):
     st.write("predict")
     # Encode dữ liệu
-    X = tranformFetures(samples, assembler)
+    X = tranformFetures(samples)
     # Predict
     return model.predict(X)
 
@@ -150,9 +158,10 @@ def get_data_from_URL():
                         post_clean = cleanData(post_pDF)
                         #st.table(post_pandasDF)
 
-                        output = st.empty()
-                        with st_capture(output.code):
-                            print(post_clean.show())
+                    post_clean.drop(*['MaTin','id','NgayDangBan','NguoiDangban','DiaChi','Gia/m2'])
+
+                    with st.spinner('Featurize processing ...'):
+                        post_featurize = tranformFetures(post_clean)
                 else:
                     print('Cant request url', status)
 
