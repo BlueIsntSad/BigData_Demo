@@ -46,12 +46,11 @@ def prediction(samples, model):
     return model.predict(X)
 
 def model_page(model_name, model):
-    option_list = ['Dữ liệu mẩu',
-                    'Tự nhập dữ liệu']
+    option_list = ['Dữ liệu mẫu', 'Nhập dữ liệu', 'Crawl dữ liệu từ URL']
     
     choice_input = st.sidebar.selectbox('Cách nhập dữ liệu', option_list)    
     st.subheader(model_name)
-    if choice_input == 'Dữ liệu mẩu':
+    if choice_input == 'Dữ liệu mẫu':
         st.write('#### Sample dataset', pd_df)
 
         # Chọn dữ liệu từ mẫu
@@ -72,7 +71,7 @@ def model_page(model_name, model):
             else:
                 st.error('Hãy chọn dữ liệu trước')
 
-    elif choice_input == 'Tự nhập dữ liệu':
+    elif choice_input == 'Nhập dữ liệu':
         with st.form("Nhập dữ liệu"):
 
             feature1 = st.text_input("Feature 1")
@@ -93,6 +92,9 @@ def model_page(model_name, model):
                 results = pd.DataFrame({'Giá dự đoán': pred,
                                             'Giá thực tế': selected_rows.TongGia})
                 st.write(results)
+
+    elif choice_input == 'Crawl dữ liệu từ URL':
+        st.write('#### Crawl URL')
 
 def create_dashboard(df):
     st.subheader('Dashboard')
@@ -164,7 +166,7 @@ if __name__ == '__main__':
     model_lr, model_rf, model_gbt, model_dt, model_ir,\
     model_lr_rmo, model_rf_rmo, model_gbt_rmo, model_dt_rmo, model_ir_rmo = \
     (lambda n: [None for _ in range(n)])(10)
-    
+
     modelLoading()
 
     test = model_lr
