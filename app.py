@@ -152,7 +152,7 @@ def get_data_from_URL():
                         post_clean = cleanData(post_pDF)
                         #st.table(post_pandasDF)
 
-                    post_clean.drop(*['MaTin','id','NgayDangBan','NguoiDangban','DiaChi','Gia/m2'])
+                    post_clean = post_clean.drop(*['MaTin','id','NgayDangBan','NguoiDangban','DiaChi','Gia/m2'])
 
                     with st.spinner('Featurize processing ...'):
                         post_featurize = tranformFetures(post_clean)
