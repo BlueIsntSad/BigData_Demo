@@ -97,7 +97,7 @@ def inser_data():
 def get_data_from_URL():
     st.write('#### Crawl URL')
 
-    URL = st.text_input('URL:', 'https://nhadatvui.vn/bat-dong-san-ABC')
+    URL = st.text_input('URL:', placeholder='https://nhadatvui.vn/bat-dong-san-ABC')
     st.write('URL get', URL)
 
 def model_page(model_name, model):
