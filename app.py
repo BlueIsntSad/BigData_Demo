@@ -20,8 +20,8 @@ from utils import *
 from crawl_url import *
 from crawl_data import *
 from clean_data import *
+from feature_extract import *
 from train_model import *
-
 
 
 @contextmanager
