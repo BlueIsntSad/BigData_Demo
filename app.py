@@ -113,7 +113,7 @@ def get_data_from_URL():
     st.write('URL get', URL)
 
     output = st.empty()
-    with st_capture(output.code):
+    #with st_capture(output.code):
         #print(getdata(URL))
 
 def model_page(model_name, model):
