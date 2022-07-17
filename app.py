@@ -47,6 +47,22 @@ def modelLoading():
         model_dt_rmo = DecisionTreeRegressionModel.load("./model/decision_tree/dt_outlierRm")
         model_ir_rmo = IsotonicRegressionModel.load("./model/isotonic_regression/ir_outlierRm")
 
+def cleanData(df):
+    df = df.drop('MoTa')
+    df = cleanRawData(df)
+    for col in df.columns:
+        if col == 'ChieuDai':
+            df = df.fillna(value=36.71238143826654, subset=[col])
+        if col == 'ChieuRong':
+            df = df.fillna(value=21.238896956820426, subset=[col])
+        if col == 'DienTich':
+            df = df.fillna(value=2578.8528670209585, subset=[col])
+        if col == 'DuongVao':
+            df = df.fillna(value=61.27955483955468, subset=[col])
+        if col == 'NamXayDung':
+            df = df.fillna(value=2021, subset=[col])
+    return df
+
 def tranformFetures(X, assembler):
     # Tạo bản sao để tránh ảnh hưởng dữ liệu gốc
     X_ = X.copy()
@@ -129,15 +145,12 @@ def get_data_from_URL():
                     post_pandasDF = pd.DataFrame.from_dict([postInfo])
                     post_JSON = json.loads(json.dumps(list(post_pandasDF.T.to_dict().values())))
                     post_pDF = spark.read.json(sc.parallelize([post_JSON]))
-                    post_pDF = post_pDF.drop('MoTa')
+                    post_clean = cleanData(post_pDF)
                     #st.table(post_pandasDF)
 
                     output = st.empty()
                     with st_capture(output.code):
-                        print(post_pDF.show())
-                        print(postInfo)
-                        post_pDF_clean = cleanRawData(post_pDF)
-                        print(post_pDF_clean.show())
+                        print(post_clean.show())
                 else:
                     print('Cant request url', status)
 
