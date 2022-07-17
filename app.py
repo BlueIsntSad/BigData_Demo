@@ -1,5 +1,6 @@
 import streamlit as st
 import numpy as np
+import pickle
 import json
 import pandas as pd
 import plotly.express as px
@@ -15,6 +16,8 @@ from pyspark.sql.functions import udf, col
 from pyspark.ml.regression import LinearRegressionModel, RandomForestRegressionModel, GBTRegressionModel, DecisionTreeRegressionModel, IsotonicRegressionModel, FMRegressionModel
 from pyspark.ml.feature import VectorAssembler, StandardScaler
 from pyspark.ml.evaluation import RegressionEvaluator
+from pyspark.ml import Pipeline
+from pyspark.ml.feature import StringIndexer, OneHotEncoder, VectorAssembler
 
 from utils import *
 from crawl_url import *
@@ -64,17 +67,15 @@ def cleanData(df):
     return df
 
 def tranformFetures(df):
-    dt1 = binningDistribute(df) #
-    dt2 = getAdministrative(dt1, keepOutput=True, vectorize=False)                                          #
-    dt3, stringIndexs = getDummy(dt2, keepOutput=True, vectorize=False)                                     #####
-    dt4, encodes_idx = getEncodedDummy(dt3)                                                                 ##
-    data_f, encodes_ohe = OHEtransform(dt4, vectorize=False)                                                ###########
+    pass
+    #dt1 = binningDistribute(df) #
+    #dt2 = getAdministrative(dt1, keepOutput=True, vectorize=False)                                          #
+    #dt3, stringIndexs = getDummy(dt2, keepOutput=True, vectorize=False)                                     #####
+    #dt4, encodes_idx = getEncodedDummy(dt3)                                                                 ##
+    #data_f, encodes_ohe = OHEtransform(dt4, vectorize=False)                                                ###########
 
-    output = st.empty()
-    with st_capture(output.code):
-        print(data_f.show(5))
 
-    return data_f
+    #return data_f
 
 def prediction(samples, model):
     st.write("predict")
@@ -246,5 +247,16 @@ if __name__ == '__main__':
     (lambda n: [None for _ in range(n)])(5)
 
     modelLoading()
+
+    with st.spinner('Load encoded ...'):
+        models_stringIndex = Pipeline.load('model/str_idx')
+        encodes_idx = OneHotEncoder.load('model/ohe_idx')
+
+        with open('model/ohe_util.pkl', 'rb') as inp:
+            encodes_utils = pickle.load(inp)
+
+    output = st.empty()
+    with st_capture(output.code):
+        print(data_f.show(5))
 
     main()

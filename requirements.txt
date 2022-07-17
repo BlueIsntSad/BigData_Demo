@@ -2,6 +2,7 @@ streamlit
 numpy
 pandas
 sklearn
+pickle
 pyspark
 tqdm
 requests_html
