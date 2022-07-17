@@ -180,7 +180,7 @@ if __name__ == '__main__':
     pd_df = data.toPandas()
 
     st.write(
-        f'<iframe src="https://nhadatvui.vn/nha-dep-phung-van-cung-3-5-x-14m-2-lau-5-ty-700-phu-nhuan1658045274"></iframe>',
+        f'<iframe src="https://nhadatvui.vn/nha-dep-phung-van-cung-3-5-x-14m-2-lau-5-ty-700-phu-nhuan1658045274" height=200></iframe>',
         unsafe_allow_html=True,
     )
 
