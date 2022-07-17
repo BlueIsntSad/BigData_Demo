@@ -123,13 +123,14 @@ def get_data_from_URL():
             with st_capture(output.code):
                 try:
                     status, postInfo = getdata(URL)
+                except:
+                    noti = st.warning("Can't get URL")
+                else:
                     if status == 200:
                         dataframe = spark.createDataFrame(postInfo)
                         print(dataframe.show())
                     else:
                         print('Cant request url', status)
-                except:
-                    noti = st.warning("Can't get URL")
 
 def model_page(model_name, model):
     option_list = ['Dữ liệu mẫu', 'Nhập dữ liệu', 'Crawl dữ liệu từ URL']
