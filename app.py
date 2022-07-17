@@ -127,8 +127,9 @@ def get_data_from_URL():
                     noti = st.warning("Can't get URL")
                 else:
                     if status == 200:
-                        dataframe = spark.createDataFrame(postInfo)
-                        print(dataframe.show())
+                        st.table(data=postInfo)
+                        #dataframe = spark.createDataFrame(postInfo)
+                        #print(dataframe.show())
                     else:
                         print('Cant request url', status)
 
