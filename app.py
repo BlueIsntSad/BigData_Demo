@@ -116,15 +116,16 @@ def get_data_from_URL():
         submit_button = st.form_submit_button(label='Submit')
 
     if submit_button:
-        st.write('push')
-    
-    #output = st.empty()
-    #with st_capture(output.code):
-    #    status, postInfo = getdata(URL)
-    #    if status == 200:
-    #        print(postInfo)
-    #    else:
-    #        print('Cant request url')
+        while not validateURL(URL):
+            st.warning('URL không hợp lệ')
+        
+        output = st.empty()
+        with st_capture(output.code):
+            status, postInfo = getdata(URL)
+            if status == 200:
+                print(postInfo)
+            else:
+                print('Cant request url')
 
 def model_page(model_name, model):
     option_list = ['Dữ liệu mẫu', 'Nhập dữ liệu', 'Crawl dữ liệu từ URL']
