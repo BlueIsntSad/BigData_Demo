@@ -135,6 +135,8 @@ def get_data_from_URL():
                     with st_capture(output.code):
                         print(post_pDF.show())
                         print(postInfo)
+                        post_pDF_clean = cleanRawData(post_pDF)
+                        print(post_pDF_clean.show())
                 else:
                     print('Cant request url', status)
 
