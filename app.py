@@ -84,7 +84,7 @@ def create_dashboard(df):
     col1, col2 = st.columns(2)
     col1.metric(label="Số lượng dự án", value=df.shape[0])
     col2.metric(label="Giá tiền trung bình mỗi dự án",
-                value="{:,}".format(round(df['TongGia'].mean() * 1000)))
+                value="{:,} VND".format(round(df['TongGia'].mean() * 1000)))
 
     fig1 = px.histogram(pd_df, x="Tinh", color="LoaiBDS", labels={
                      "Tinh": "Tỉnh(Thành phố)",
@@ -137,17 +137,26 @@ def main():
 if __name__ == '__main__':
     spark, sc = _initialize_spark()
     ## Load dataset
-    df = spark.read.format('org.apache.spark.sql.json').load("./data/clean/clean.json")
-    data = df.drop(*['id','NgayDangBan', 'MoTa'])
+    with st.spinner('Load data...'):
+        df = spark.read.format('org.apache.spark.sql.json').load("./data/clean/clean.json")
+    data = df.drop(*['id', 'MoTa'])
     #st.write("data ready")
     data = data.fillna(0)
     pd_df = data.toPandas()
 
     ## Load model
-    model_lr = LinearRegressionModel.load("./model/linear_regression/lr_basic")
-    model_rf = RandomForestRegressionModel.load("./model/random_forest/rf_basic")
-    model_gbt = GBTRegressionModel.load("./model/gradient_boosted/gbt_basic")
-    model_dt = DecisionTreeRegressionModel.load("./model/decision_tree/dt_basic")
-    model_ir = IsotonicRegressionModel.load("./model/isotonic_regression/ir_basic")
+    with st.spinner('Load model set (1/2)...'):
+        model_lr = LinearRegressionModel.load("./model/linear_regression/lr_basic")
+        model_rf = RandomForestRegressionModel.load("./model/random_forest/rf_basic")
+        model_gbt = GBTRegressionModel.load("./model/gradient_boosted/gbt_basic")
+        model_dt = DecisionTreeRegressionModel.load("./model/decision_tree/dt_basic")
+        model_ir = IsotonicRegressionModel.load("./model/isotonic_regression/ir_basic")
+
+    with st.spinner('Load model set (2/2)...'):
+        model_lr_rmo = LinearRegressionModel.load("./model/linear_regression/lr_outlierRm")
+        model_rf_rmo = RandomForestRegressionModel.load("./model/random_forest/rf_outlierRm")
+        model_gbt_rmo = GBTRegressionModel.load("./model/gradient_boosted/gbt_outlierRm")
+        model_dt_rmo = DecisionTreeRegressionModel.load("./model/decision_tree/dt_outlierRm")
+        model_ir_rmo = IsotonicRegressionModel.load("./model/isotonic_regression/ir_outlierRm")
 
     main()
