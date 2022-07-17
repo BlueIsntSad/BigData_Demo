@@ -121,11 +121,14 @@ def get_data_from_URL():
         else:
             output = st.empty()
             with st_capture(output.code):
-                status, postInfo = getdata(URL)
-                if status == 200:
-                    print(postInfo)
-                else:
-                    print('Cant request url')
+                try:
+                    status, postInfo = getdata(URL)
+                    if status == 200:
+                        print(postInfo)
+                    else:
+                        print('Cant request url', status)
+                except:
+                    noti = st.warning("Can't get URL")
 
 def model_page(model_name, model):
     option_list = ['Dữ liệu mẫu', 'Nhập dữ liệu', 'Crawl dữ liệu từ URL']
