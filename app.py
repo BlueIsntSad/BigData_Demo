@@ -115,7 +115,7 @@ def get_data_from_URL():
             placeholder='https://nhadatvui.vn/bat-dong-san-ABC')
         submit_button = st.form_submit_button(label='Submit')
 
-    if getURLbt:
+    if submit_button:
         st.write('push')
     
     #output = st.empty()
