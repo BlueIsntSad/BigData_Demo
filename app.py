@@ -105,7 +105,6 @@ def create_dashboard(df):
     fig_col3.plotly_chart(fig3)
 
 def main():
-    st.set_page_config(layout="wide")
     st.title('Dự đoán giá bất động sản')
     model_list = ['Dashboard',
                     'Mô hình Linear Regression',
@@ -136,6 +135,7 @@ def main():
 
 if __name__ == '__main__':
     spark, sc = _initialize_spark()
+    st.set_page_config(layout="wide")
     ## Load dataset
     with st.spinner('Load data...'):
         df = spark.read.format('org.apache.spark.sql.json').load("./data/clean/clean.json")
