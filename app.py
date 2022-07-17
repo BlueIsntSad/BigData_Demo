@@ -114,7 +114,7 @@ def get_data_from_URL():
 
     output = st.empty()
     with st_capture(output.code):
-        print(data.show())
+        print(getdata(URL))
 
 def model_page(model_name, model):
     option_list = ['Dữ liệu mẫu', 'Nhập dữ liệu', 'Crawl dữ liệu từ URL']
