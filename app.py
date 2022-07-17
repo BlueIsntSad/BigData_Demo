@@ -3,6 +3,10 @@ import numpy as np
 import pandas as pd
 import plotly.express as px
 
+from contextlib import contextmanager, redirect_stdout
+from io import StringIO
+from time import sleep
+
 from utils import _initialize_spark
 from pyspark.sql.types import *
 from pyspark.sql import functions as f
@@ -16,6 +20,21 @@ from crawl_url import *
 from crawl_data import *
 from clean_data import *
 from train_model import *
+
+
+
+@contextmanager
+def st_capture(output_func):
+    with StringIO() as stdout, redirect_stdout(stdout):
+        old_write = stdout.write
+
+        def new_write(string):
+            ret = old_write(string)
+            output_func(stdout.getvalue())
+            return ret
+        
+        stdout.write = new_write
+        yield
 
 @st.cache
 def modelLoading():
@@ -88,10 +107,14 @@ def inser_data():
             st.write(results)
 
 def get_data_from_URL():
-    st.write('#### Crawl URL')
+    st.write('#### Crawl dữ liệu từ URL')
 
-    URL = st.text_input('URL đến bài đăng bán BDS lấy từ https://nhadatvui.vn/ .', placeholder='https://nhadatvui.vn/bat-dong-san-ABC')
+    URL = st.text_input('Điền URL đến bài đăng bán BDS lấy từ https://nhadatvui.vn/ cần dự đoán.', placeholder='https://nhadatvui.vn/bat-dong-san-ABC')
     st.write('URL get', URL)
+
+    output = st.empty()
+    with st_capture(output.code):
+        print(data.show())
 
 def model_page(model_name, model):
     option_list = ['Dữ liệu mẫu', 'Nhập dữ liệu', 'Crawl dữ liệu từ URL']
