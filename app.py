@@ -119,19 +119,20 @@ def get_data_from_URL():
         if not validateURL(URL):
             noti = st.warning('URL không hợp lệ')
         else:
-            output = st.empty()
-            with st_capture(output.code):
-                try:
-                    status, postInfo = getdata(URL)
-                except:
-                    noti = st.warning("Can't get URL")
+            try:
+                status, postInfo = getdata(URL)
+            except:
+                noti = st.warning("Can't get URL")
+            else:
+                if status == 200:
+                    st.table(data=postInfo)
+                    
+                    output = st.empty()
+                    with st_capture(output.code):
+                        dataframe = spark.createDataFrame(postInfo)
+                        print(dataframe.show())
                 else:
-                    if status == 200:
-                        st.table(data=postInfo)
-                        #dataframe = spark.createDataFrame(postInfo)
-                        #print(dataframe.show())
-                    else:
-                        print('Cant request url', status)
+                    print('Cant request url', status)
 
 def model_page(model_name, model):
     option_list = ['Dữ liệu mẫu', 'Nhập dữ liệu', 'Crawl dữ liệu từ URL']
