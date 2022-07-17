@@ -129,7 +129,7 @@ def get_data_from_URL():
                     post_pandasDF = pd.DataFrame.from_dict([postInfo])
                     post_JSON = json.loads(json.dumps(list(post_pandasDF.T.to_dict().values())))
                     post_pDF = spark.read.json(sc.parallelize([post_JSON]))
-                    post_pDF = post_pDF.drop['MoTa']
+                    post_pDF = post_pDF.drop('MoTa')]
                     #st.table(post_pandasDF)
 
                     output = st.empty()
