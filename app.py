@@ -131,6 +131,7 @@ def main():
                     'Mô hình Gradient Boosting',
                     'Mô hình Decision Tree',
                     'Mô hình Isotonic Regression']
+    global choice_model
     choice_model = st.sidebar.selectbox('Mô hình huấn luyện trên:', model_list)
 
 
