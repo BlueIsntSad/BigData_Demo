@@ -64,9 +64,6 @@ def cleanData(df):
     return df
 
 def tranformFetures(df):
-    # Tạo bản sao để tránh ảnh hưởng dữ liệu gốc
-    X_ = X.copy()
-    ###########################
     dt1 = binningDistribute(df) #
     dt2 = getAdministrative(dt1, keepOutput=True, vectorize=False)                                          #
     dt3, stringIndexs = getDummy(dt2, keepOutput=True, vectorize=False)                                     #####
@@ -77,9 +74,6 @@ def tranformFetures(df):
     with st_capture(output.code):
         print(data_f.show(5))
 
-
-    ###########################
-    #st.write("tranform")
     return data_f
 
 def prediction(samples, model):
