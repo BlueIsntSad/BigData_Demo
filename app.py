@@ -1,5 +1,6 @@
 import streamlit as st
 import numpy as np
+import json
 import pandas as pd
 import plotly.express as px
 
@@ -125,12 +126,14 @@ def get_data_from_URL():
                 noti = st.warning("Can't get URL")
             else:
                 if status == 200:
-                    #st.table(data=postInfo)
+                    post_pandasDF = pd.DataFrame.from_dict([postInfo])
+                    post_JSON = json.loads(json.dumps(list(post_pandasDF.T.to_dict().values())))
+                    post_pDF = spark.read.json(sc.parallelize([post_JSON]))
+                    #st.table(post_pandasDF)
 
                     output = st.empty()
                     with st_capture(output.code):
-                        #dataframe = spark.createDataFrame(postInfo)
-                        #print(dataframe.show())
+                        print(post_pDF.show())
                         print(postInfo)
                 else:
                     print('Cant request url', status)
