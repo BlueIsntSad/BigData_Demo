@@ -168,12 +168,11 @@ def typeCasting(df: DataFrame) -> DataFrame:
         c for c in CONTINUOUS_COLUMNS
         if c not in int_columns
         and c not in ['ChieuSau','DienTichDat']]
-
-    for column in int_columns:
-        df = df.withColumn(column, col(column).cast('int'))
-    
-    for column in float_columns:
-        df = df.withColumn(column, col(column).cast('float'))
+    for c in df.columns:
+        if c in int_columns:
+            df = df.withColumn(c, col(c).cast('int'))
+        elif c in float_columns:
+            df = df.withColumn(c, col(c).cast('float'))
     return df
 # }}}
 
