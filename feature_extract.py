@@ -168,14 +168,20 @@ def binningDistribute(df: DataFrame, keepInput=False) -> DataFrame:
         return df.join(df_distribution_level,'Id_NguoiDangban').drop(*['count','Id_NguoiDangban'])
 
 
-def getDummy(df: DataFrame, keepInput=False, keepOutput=False, vectorize=True, outputCol='features_idx') -> Tuple[DataFrame, PipelineModel]:
+def getDummy(
+    df, keepInput=False, keepOutput=False, vectorize=True, outputCol='features_idx',
+    isPredict = False, models_stringIndex = None):
 
     idx_columns = [c for c in CATEGORICAL_COLUMNS if not c in ['Tinh','Huyen','Xa','Id_NguoiDangban_level']]
     indexers = [ StringIndexer(inputCol=c, outputCol="{0}_idx".format(c), handleInvalid="skip")
                  for c in df.columns if c in idx_columns]
 
     pipeline1 = Pipeline(stages=indexers)
-    models_stringIndex = pipeline1.fit(df)
+    if isPredict:
+        pass
+    else:
+        models_stringIndex = pipeline1.fit(df)
+
     data = models_stringIndex.transform(df)
 
     if keepInput:
@@ -195,10 +201,11 @@ def getDummy(df: DataFrame, keepInput=False, keepOutput=False, vectorize=True, o
             data = data.drop(*['{0}_idx'.format(c) for c in df.columns if c in idx_columns])
     else:
         pass
+        
     return data, models_stringIndex
 
 
-def getEncodedDummy(df: DataFrame, keepInput = False) -> Tuple[DataFrame, OneHotEncoderModel]:
+def getEncodedDummy(df, keepInput = False, isPredict = False, encoder_m = None):
     import re
     from pyspark.ml.feature import OneHotEncoder
 
@@ -207,12 +214,16 @@ def getEncodedDummy(df: DataFrame, keepInput = False) -> Tuple[DataFrame, OneHot
     oheList = [sub.replace('idx', 'ohe') for sub in idxList]
 
     encoder = OneHotEncoder(inputCols=idxList, outputCols=oheList)
-    encoded = encoder.fit(df).transform(df)
+    if isPredict:
+        pass
+    else:
+        encoder_m = encoder.fit(df)
+    encoded = encoder_m.transform(df)
     
     if keepInput:
-        return encoded, encoder
+        return encoded, encoder_m
     else:
-        return encoded.drop(*idxList), encoder
+        return encoded.drop(*idxList), encoder_m
 
 
 def getAdministrative(df: DataFrame, vectorize=True, keepInput=False, keepOutput=False, outputCol='features_adm') -> DataFrame:
