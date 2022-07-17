@@ -95,7 +95,6 @@ def model_page(model_name, model):
                                             'Giá thực tế': selected_rows.TongGia})
                 st.write(results)
 
-@st.cache
 def create_dashboard(df):
     st.subheader('Dashboard')
 
