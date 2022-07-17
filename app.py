@@ -19,15 +19,8 @@ from train_model import *
 
 @st.cache
 def modelLoading():
-    global model_lr, model_rf, model_gbt, model_dt, model_ir, model_lr_rmo, model_rf_rmo, model_gbt_rmo, model_dt_rmo, model_ir_rmo
-    with st.spinner('Load model set (1/2)...'):
-        model_lr = LinearRegressionModel.load("./model/linear_regression/lr_basic")
-        model_rf = RandomForestRegressionModel.load("./model/random_forest/rf_basic")
-        model_gbt = GBTRegressionModel.load("./model/gradient_boosted/gbt_basic")
-        model_dt = DecisionTreeRegressionModel.load("./model/decision_tree/dt_basic")
-        model_ir = IsotonicRegressionModel.load("./model/isotonic_regression/ir_basic")
-
-    with st.spinner('Load model set (2/2)...'):
+    global model_lr_rmo, model_rf_rmo, model_gbt_rmo, model_dt_rmo, model_ir_rmo
+    with st.spinner('Load model set ...'):
         model_lr_rmo = LinearRegressionModel.load("./model/linear_regression/lr_outlierRm")
         model_rf_rmo = RandomForestRegressionModel.load("./model/random_forest/rf_outlierRm")
         model_gbt_rmo = GBTRegressionModel.load("./model/gradient_boosted/gbt_outlierRm")
@@ -183,12 +176,9 @@ if __name__ == '__main__':
     pd_df = data.toPandas()
 
     ## Load model
-    model_lr, model_rf, model_gbt, model_dt, model_ir,\
     model_lr_rmo, model_rf_rmo, model_gbt_rmo, model_dt_rmo, model_ir_rmo = \
-    (lambda n: [None for _ in range(n)])(10)
+    (lambda n: [None for _ in range(n)])(5)
 
     modelLoading()
-
-    test = model_lr
 
     main()
