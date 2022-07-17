@@ -84,7 +84,7 @@ def create_dashboard(df):
     col1, col2 = st.columns(2)
     col1.metric(label="Số lượng dự án", value=df.shape[0])
     col2.metric(label="Giá tiền trung bình mỗi dự án",
-                value=float("{:,}".format(round(df['TongGia'].mean()))) * 1000)
+                value="{:,}".format(round(df['TongGia'].mean() * 1000)))
 
     fig1 = px.histogram(pd_df, x="Tinh", color="LoaiBDS", labels={
                      "Tinh": "Tỉnh(Thành phố)",
