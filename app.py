@@ -149,19 +149,19 @@ def main():
     if choice_model =='Dashboard':
         create_dashboard(pd_df)
     elif choice_model == 'Mô hình Linear Regression':
-        model_page(choice_model, model_lr)
+        model_page(choice_model, model_lr_rmo)
 
     elif choice_model == 'Mô hình Random Forest':
-        model_page(choice_model, model_rf)
+        model_page(choice_model, model_rf_rmo)
 
     elif choice_model == 'Mô hình Gradient Boosting':
-        model_page(choice_model, model_gbt)
+        model_page(choice_model, model_gbt_rmo)
 
     elif choice_model == 'Mô hình Decision Tree':
-        model_page(choice_model, model_dt)
+        model_page(choice_model, model_dt_rmo)
 
     elif choice_model == 'Mô hình Isotonic Regression':
-        model_page(choice_model, model_ir)
+        model_page(choice_model, model_ir_rmo)
 
 
 if __name__ == '__main__':
