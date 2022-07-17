@@ -129,8 +129,8 @@ def get_data_from_URL():
 
                     output = st.empty()
                     with st_capture(output.code):
-                        dataframe = spark.createDataFrame(postInfo)
-                        print(dataframe.show())
+                        #dataframe = spark.createDataFrame(postInfo)
+                        #print(dataframe.show())
                         print(postInfo)
                 else:
                     print('Cant request url', status)
