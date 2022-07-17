@@ -10,7 +10,7 @@ from pyspark.ml.feature import VectorAssembler, StandardScaler
 from pyspark.ml.evaluation import RegressionEvaluator
 import plotly.express as px
 
-#@st.cache
+@st.cache
 def modelLoading():
     global model_lr, model_rf, model_gbt, model_dt, model_ir, model_lr_rmo, model_rf_rmo, model_gbt_rmo, model_dt_rmo, model_ir_rmo
     with st.spinner('Load model set (1/2)...'):
@@ -161,6 +161,10 @@ if __name__ == '__main__':
     pd_df = data.toPandas()
 
     ## Load model
+    model_lr, model_rf, model_gbt, model_dt, model_ir,\
+    model_lr_rmo, model_rf_rmo, model_gbt_rmo, model_dt_rmo, model_ir_rmo = \
+    (lambda n: [None for _ in range(n)])(10)
+    
     modelLoading()
 
     test = model_lr
