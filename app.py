@@ -111,8 +111,7 @@ def main():
                     'Mô hình Random Forest',
                     'Mô hình Gradient Boosting',
                     'Mô hình Decision Tree',
-                    'Mô hình Isotonic Regression',
-                    'Mô hình FMR']
+                    'Mô hình Isotonic Regression']
     choice_model = st.sidebar.selectbox('Mô hình huấn luyện trên:', model_list)
 
 
@@ -133,8 +132,6 @@ def main():
     elif choice_model == 'Mô hình Isotonic Regression':
         model_page(choice_model, model_ir)
 
-    elif choice_model == 'Mô hình FMR':
-        model_page(choice_model, model_fmr)
 
 if __name__ == '__main__':
     spark, sc = _initialize_spark()
@@ -151,7 +148,5 @@ if __name__ == '__main__':
     model_gbt = GBTRegressionModel.load("./model/gradient_boosted/gbt_basic")
     model_dt = DecisionTreeRegressionModel.load("./model/decision_tree/dt_basic")
     model_ir = IsotonicRegressionModel.load("./model/isotonic_regression/ir_basic")
-    model_fmr = FMRegressionModel.load("./model/factorization_machines_regression/fmr_basic")
-
 
     main()
