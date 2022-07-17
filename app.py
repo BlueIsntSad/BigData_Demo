@@ -179,61 +179,6 @@ if __name__ == '__main__':
     data = data.fillna(0)
     pd_df = data.toPandas()
 
-    #st.write(
-    #    f'<iframe src="https://nhadatvui.vn/nha-dep-phung-van-cung-3-5-x-14m-2-lau-5-ty-700-phu-nhuan1658045274" height=200></iframe>',
-    #    unsafe_allow_html=True,
-    #)
-    html_string = '''
-    <div class="product-title-price">
-        <div class="left-title-price">
-            <h1 class="text-very-large m-0 line-26 text-500">
-                Nhà đẹp Phùng Văn Cung, 3.5 x 14m, 2 lầu, 5 Tỷ 700, Phú Nhuận
-            </h1>
-            <div class="mt-4 text-100 display-flex flex-justify-between flex-center">
-                <div class="display-flex flex-center line-22 ">
-                    <i class="fa fa-icon-me fa-custom-pin1"></i>
-                    <span>
-                        Phùng Văn Cung, Phường 3, Quận Phú Nhuận, TP. Hồ Chí Minh
-                    </span>
-                </div>
-                                                    <a href="https://nhadatvui.vn/maps?parent=mua-ban&amp;category=5&amp;product_id=17076" class="bags bags-round border-blue bags-blue cursor display-flex flex-center hidden-sm view-map-btn" target="_blank">
-                        <i class="fa fa-icon-me fa-custom-map-large"></i>
-                        <span class="ml-2">Bản đồ</span>
-                    </a>
-                                            </div>
-
-            <div class="mt-4 display-flex flex-justify-between text-medium-s">
-                <div class="price-box">
-                    <span class="price">5.7 tỷ</span><span class="text-gray text-small ml-2">116.33 triệu/m²</span>
-
-                </div>
-                <div class="product-status display-flex"> 
-                    <div class="display-flex">
-                        <span class="mr-1">
-                            Mã tin: 
-                        </span>
-                        <span class="text-gray">17076</span>
-                    </div>
-                                                        <div class="display-flex ml-3">
-                        <span class="mr-1">
-                            Loại tin: 
-                        </span>
-                        <span class="text-gray">Miễn phí</span>
-                    </div>
-                    <div class="display-flex ml-3">
-                                                                <span class="mr-1">
-                            Hết hạn: 
-                        </span>
-                        <span class="text-gray">15/09/2022</span>
-                                                            </div>
-                                                    </div>
-            </div>
-        </div>
-    </div>
-    
-    '''
-    st.markdown(html_string, unsafe_allow_html=True)
-
     ## Load model
     model_lr, model_rf, model_gbt, model_dt, model_ir,\
     model_lr_rmo, model_rf_rmo, model_gbt_rmo, model_dt_rmo, model_ir_rmo = \
