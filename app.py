@@ -1,14 +1,21 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
+import plotly.express as px
+
 from utils import _initialize_spark
 from pyspark.sql.types import *
-import pyspark.sql.functions as f
+from pyspark.sql import functions as f
 from pyspark.sql.functions import udf, col
 from pyspark.ml.regression import LinearRegressionModel, RandomForestRegressionModel, GBTRegressionModel, DecisionTreeRegressionModel, IsotonicRegressionModel, FMRegressionModel
 from pyspark.ml.feature import VectorAssembler, StandardScaler
 from pyspark.ml.evaluation import RegressionEvaluator
-import plotly.express as px
+
+from utils import *
+from crawl_url import *
+from crawl_data import *
+from clean_data import *
+from train_model import *
 
 @st.cache
 def modelLoading():
@@ -87,6 +94,9 @@ def inser_data():
                                         'Giá thực tế': selected_rows.TongGia})
             st.write(results)
 
+def get_data_from_URL():
+    st.write('#### Crawl URL')
+
 def model_page(model_name, model):
     option_list = ['Dữ liệu mẫu', 'Nhập dữ liệu', 'Crawl dữ liệu từ URL']
     
@@ -100,7 +110,7 @@ def model_page(model_name, model):
         inser_data()
 
     elif choice_input == 'Crawl dữ liệu từ URL':
-        st.write('#### Crawl URL')
+        get_data_from_URL()
 
 def create_dashboard(df):
     st.subheader('Dashboard')
