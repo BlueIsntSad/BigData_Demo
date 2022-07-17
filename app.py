@@ -45,6 +45,48 @@ def prediction(samples, model):
     # Predict
     return model.predict(X)
 
+def load_sample_data():
+    # Chọn dữ liệu từ mẫu
+    selected_indices = st.multiselect('Chọn mẫu từ bảng dữ liệu:', pd_df.index)
+    selected_rows = pd_df.loc[selected_indices]
+    st.write('#### Kết quả')
+
+    if st.button('Dự đoán'):
+        if not selected_rows.empty:
+            X = selected_rows.iloc[:, :-1]
+            pred = prediction(X, model)
+
+            # Xuất ra màn hình
+            st.write("predict", pred)
+            results = pd.DataFrame({
+                'Giá dự đoán': pred,
+                'Giá thực tế': selected_rows.TongGia
+                })
+            st.write(results)
+        else:
+            st.error('Hãy chọn dữ liệu trước')
+
+def inser_data():
+    with st.form("Nhập dữ liệu"):
+        feature1 = st.text_input("Feature 1")
+        feature2 = st.text_input("feature 2")
+        feature3 = st.text_input("Feature 3")
+
+        # Every form must have a submit button.
+        submitted = st.form_submit_button("Submit")
+        if submitted:
+            data_submitted = {'feature 1' : feature1,
+                                'feature 2' : feature2,
+                                'feature 3': feature3}
+            X = pd.DataFrame(data_submitted, index=[0])
+            pred = prediction(X, model)
+
+            # Xuất ra màn hình
+            st.write("predict", pred)
+            results = pd.DataFrame({'Giá dự đoán': pred,
+                                        'Giá thực tế': selected_rows.TongGia})
+            st.write(results)
+
 def model_page(model_name, model):
     option_list = ['Dữ liệu mẫu', 'Nhập dữ liệu', 'Crawl dữ liệu từ URL']
     
@@ -52,46 +94,10 @@ def model_page(model_name, model):
     st.subheader(model_name)
     if choice_input == 'Dữ liệu mẫu':
         st.write('#### Sample dataset', pd_df)
-
-        # Chọn dữ liệu từ mẫu
-        selected_indices = st.multiselect('Chọn mẫu từ bảng dữ liệu:', pd_df.index)
-        selected_rows = pd_df.loc[selected_indices]
-        st.write('#### Kết quả')
-
-        if st.button('Dự đoán'):
-            if not selected_rows.empty:
-                X = selected_rows.iloc[:, :-1]
-                pred = prediction(X, model)
-
-                # Xuất ra màn hình
-                st.write("predict", pred)
-                results = pd.DataFrame({'Giá dự đoán': pred,
-                                            'Giá thực tế': selected_rows.TongGia})
-                st.write(results)
-            else:
-                st.error('Hãy chọn dữ liệu trước')
+        load_sample_data()
 
     elif choice_input == 'Nhập dữ liệu':
-        with st.form("Nhập dữ liệu"):
-
-            feature1 = st.text_input("Feature 1")
-            feature2 = st.text_input("feature 2")
-            feature3 = st.text_input("Feature 3")
-
-            # Every form must have a submit button.
-            submitted = st.form_submit_button("Submit")
-            if submitted:
-                data_submitted = {'feature 1' : feature1,
-                                    'feature 2' : feature2,
-                                    'feature 3': feature3}
-                X = pd.DataFrame(data_submitted, index=[0])
-                pred = prediction(X, model)
-
-                # Xuất ra màn hình
-                st.write("predict", pred)
-                results = pd.DataFrame({'Giá dự đoán': pred,
-                                            'Giá thực tế': selected_rows.TongGia})
-                st.write(results)
+        inser_data()
 
     elif choice_input == 'Crawl dữ liệu từ URL':
         st.write('#### Crawl URL')
