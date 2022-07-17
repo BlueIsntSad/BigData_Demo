@@ -48,53 +48,54 @@ def prediction(samples, model):
 def model_page(model_name, model):
     option_list = ['Dữ liệu mẫu', 'Nhập dữ liệu', 'Crawl dữ liệu từ URL']
     
-    choice_input = st.sidebar.selectbox('Cách nhập dữ liệu', option_list)    
-    st.subheader(model_name)
-    if choice_input == 'Dữ liệu mẫu':
-        st.write('#### Sample dataset', pd_df)
+    with choice_model == model_name:
+        choice_input = st.sidebar.selectbox('Cách nhập dữ liệu', option_list)    
+        st.subheader(model_name)
+        if choice_input == 'Dữ liệu mẫu':
+            st.write('#### Sample dataset', pd_df)
 
-        # Chọn dữ liệu từ mẫu
-        selected_indices = st.multiselect('Chọn mẫu từ bảng dữ liệu:', pd_df.index)
-        selected_rows = pd_df.loc[selected_indices]
-        st.write('#### Kết quả')
+            # Chọn dữ liệu từ mẫu
+            selected_indices = st.multiselect('Chọn mẫu từ bảng dữ liệu:', pd_df.index)
+            selected_rows = pd_df.loc[selected_indices]
+            st.write('#### Kết quả')
 
-        if st.button('Dự đoán'):
-            if not selected_rows.empty:
-                X = selected_rows.iloc[:, :-1]
-                pred = prediction(X, model)
+            if st.button('Dự đoán'):
+                if not selected_rows.empty:
+                    X = selected_rows.iloc[:, :-1]
+                    pred = prediction(X, model)
 
-                # Xuất ra màn hình
-                st.write("predict", pred)
-                results = pd.DataFrame({'Giá dự đoán': pred,
-                                            'Giá thực tế': selected_rows.TongGia})
-                st.write(results)
-            else:
-                st.error('Hãy chọn dữ liệu trước')
+                    # Xuất ra màn hình
+                    st.write("predict", pred)
+                    results = pd.DataFrame({'Giá dự đoán': pred,
+                                                'Giá thực tế': selected_rows.TongGia})
+                    st.write(results)
+                else:
+                    st.error('Hãy chọn dữ liệu trước')
 
-    elif choice_input == 'Nhập dữ liệu':
-        with st.form("Nhập dữ liệu"):
+        elif choice_input == 'Nhập dữ liệu':
+            with st.form("Nhập dữ liệu"):
 
-            feature1 = st.text_input("Feature 1")
-            feature2 = st.text_input("feature 2")
-            feature3 = st.text_input("Feature 3")
+                feature1 = st.text_input("Feature 1")
+                feature2 = st.text_input("feature 2")
+                feature3 = st.text_input("Feature 3")
 
-            # Every form must have a submit button.
-            submitted = st.form_submit_button("Submit")
-            if submitted:
-                data_submitted = {'feature 1' : feature1,
-                                    'feature 2' : feature2,
-                                    'feature 3': feature3}
-                X = pd.DataFrame(data_submitted, index=[0])
-                pred = prediction(X, model)
+                # Every form must have a submit button.
+                submitted = st.form_submit_button("Submit")
+                if submitted:
+                    data_submitted = {'feature 1' : feature1,
+                                        'feature 2' : feature2,
+                                        'feature 3': feature3}
+                    X = pd.DataFrame(data_submitted, index=[0])
+                    pred = prediction(X, model)
 
-                # Xuất ra màn hình
-                st.write("predict", pred)
-                results = pd.DataFrame({'Giá dự đoán': pred,
-                                            'Giá thực tế': selected_rows.TongGia})
-                st.write(results)
+                    # Xuất ra màn hình
+                    st.write("predict", pred)
+                    results = pd.DataFrame({'Giá dự đoán': pred,
+                                                'Giá thực tế': selected_rows.TongGia})
+                    st.write(results)
 
-    elif choice_input == 'Crawl dữ liệu từ URL':
-        st.write('#### Crawl URL')
+        elif choice_input == 'Crawl dữ liệu từ URL':
+            st.write('#### Crawl URL')
 
 def create_dashboard(df):
     st.subheader('Dashboard')
